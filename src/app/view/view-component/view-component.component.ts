@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { TestService } from 'src/app/test.service';
 
@@ -7,7 +8,18 @@ import { TestService } from 'src/app/test.service';
   styleUrls: ['./view-component.component.css']
 })
 export class ViewComponentComponent {
-  constructor(svc: TestService){
-    svc.printToConsole('From view component');
+
+  userName: string = '';
+  response: any;
+  constructor(private http: HttpClient) {
+
   }
+
+  search() {
+    this.http.get('https://api.github.com/users/' + this.userName).subscribe((response) => {
+      this.response = response;
+      console.log(response);
+    })
+  }
+
 }
